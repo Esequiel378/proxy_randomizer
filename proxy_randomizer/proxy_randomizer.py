@@ -1,1 +1,1 @@
-"""Main module."""
+print("Hello word")
