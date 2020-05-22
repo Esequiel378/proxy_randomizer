@@ -10,7 +10,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = [
+    'requests==2.23.0',
+    'beautifulsoup4==4.9.0',
+    'lxml==4.5.0',
+]
 
 setup_requirements = ['pytest-runner', ]
 
