@@ -26,10 +26,10 @@ class NotFoundError(Exception):
 
 
 # Anonymities constants
-UNKNOWN     : t.Final     = Anonymity(level=0, name="UNKNOWN")
-TRANSPARENT : t.Final     = Anonymity(level=1, name="TRANSPARENT")
-ANONYMOUS   : t.Final     = Anonymity(level=2, name="ANONYMOUS")
-ELITE       : t.Final     = Anonymity(level=3, name="ELITE")
+UNKNOWN         = Anonymity(level=0, name="UNKNOWN")      # type: t.Final
+TRANSPARENT     = Anonymity(level=1, name="TRANSPARENT")  # type: t.Final
+ANONYMOUS       = Anonymity(level=2, name="ANONYMOUS")    # type: t.Final
+ELITE           = Anonymity(level=3, name="ELITE")        # type: t.Final
 
 
 
