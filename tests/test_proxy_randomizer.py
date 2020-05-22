@@ -34,7 +34,7 @@ class TestProxy:
     # test_proxy
     # ---------------------------------------------------------------
     def test_proxy(self):
-        
+
         p = proxy.Proxy(
             ip_address  = "127.0.0.1",
             port        = "8000",
@@ -42,7 +42,7 @@ class TestProxy:
             anonymity   = utils.UNKNOWN
         )
 
-        assert p.__str__()      == "127.0.0.1:8000 Argentina UNKNOWN 0"
+        assert p.__str__() == "127.0.0.1:8000 Argentina UNKNOWN 0"
         assert p.get_proxy()    == "127.0.0.1:8000"
 
 
@@ -90,6 +90,6 @@ class TestUtils:
     # test_bad_get_table_content
     # ---------------------------------------------------------------
     def test_bad_get_table_content(self):
-        
+
         with pytest.raises(utils.NotFoundError):
             utils.get_table_content("", attrs=dict())
