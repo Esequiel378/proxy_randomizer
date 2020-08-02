@@ -22,6 +22,14 @@ proxy randomizer
 * Free software: MIT license
 * Documentation: https://proxy-randomizer.readthedocs.io.
 
+Project Desciption
+------------------
+
+Inpired by `http-request-randomizer`_
+
+proxy_randomizer is intended to use for small-meduim web scrapers/crawlers, helping to avoid
+temporal/permanent bans from web pages, generating random proxies to include in the requests
+
 Installation
 ------------
 
@@ -105,3 +113,4 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`http-request-randomizer`: https://github.com/pgaref/HTTP_Request_Randomizer
