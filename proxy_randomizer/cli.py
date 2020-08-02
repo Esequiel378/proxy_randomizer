@@ -25,12 +25,12 @@ def main() -> None:
     args = parser.parse_args()
 
     # create a RegisteredProviders instance
-    p = RegisteredProviders()
+    rp = RegisteredProviders()
     # parse providers
-    p.parse_providers()
+    rp.parse_providers()
 
     # log out a random proxy
-    print(f"proxy: {p.get_random_proxy()}")
+    print(f"proxy: {rp.get_random_proxy()}")
 
     return 0
 

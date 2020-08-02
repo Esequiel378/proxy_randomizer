@@ -22,6 +22,86 @@ proxy randomizer
 * Free software: MIT license
 * Documentation: https://proxy-randomizer.readthedocs.io.
 
+Installation
+-------
+
+.. code-block:: python
+
+   pip install proxy_randomizer
+
+API
+-------
+
+To use proxy_randomizer in your code, you just need to generate a
+RegisteredProviders instance and parse the providers.
+
+.. code-block:: python
+    :linenos:
+
+    from proxy_randomizer.providers import RegisteredProviders
+
+    rp = RegisteredProviders()
+    rp.parse_providers()
+
+    print(f"proxy: {rp.get_random_proxy()}")
+
+
+You can iterate throughout all proxies as simple as this.
+
+.. code-block:: python
+    :linenos:
+
+    from proxy_randomizer.providers import RegisteredProviders
+    import requests
+
+    rp = RegisteredProviders()
+    rp.parse_providers()
+
+    for proxy in rp.proxies:
+
+        proxies     = { "https": f"{proxy.ip_address}:{proxy.port}" }
+        response    = requests.get("http://google.com", proxies=proxies)
+
+
+
+If you need to hide your identity, you can filter the proxy list by its
+anonymity level.
+
+.. code-block:: python
+    :linenos:
+
+    from proxy_randomizer.providers import RegisteredProviders
+    from proxy_randomizer.utils import ANONYMOUS
+
+    rp = RegisteredProviders()
+    rp.parse_providers()
+
+    anonymous_proxies = list( filter(lambda proxy: proxy.anonymity == ANONYMOUS, rp.proxies) )
+
+    print(f"filtered proxies: {anonymous_proxies}")
+
+There are four different anonymity levels, you can inspect them like this
+
+.. code-block:: python
+    :linenos:
+
+    from proxy_randomizer.utils import ANONYMITY_LEVELS
+
+    print(ANONYMITY_LEVELS)
+
+
+
+Command-line interface
+-------
+
+If you need some quick proxy, just type this in your terminal.
+
+.. code-block:: terminal
+
+   proxy_randomizer
+
+
+
 Credits
 -------
 

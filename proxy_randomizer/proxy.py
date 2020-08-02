@@ -39,18 +39,30 @@ class Anonymity:
 
     # __init__
     # ---------------------------------------------------------------
-    def __init__(self, level : int, name : str):
+    def __init__(self, name : str, level : int):
         """Anonymity constructor.
-
-        :param  level   : integer that assign a level for anonimity
-        :type   level   : int
 
         :param  name    : a representative name for Anonimity
         :type   name    : str
+
+        :param  level   : integer that assign a level for anonimity
+        :type   level   : int
         """
 
-        self.level  : int = level
         self.name   : str = name
+        self.level  : int = level
+
+    # __repr__
+    # ---------------------------------------------------------------
+    def __repr__(self) -> str:
+
+        """return a string representation of anonymity.
+
+        :return : string representation
+        :rtype  : str
+        """
+
+        return f"Anonimity(name='{self.name}, level={self.level}')"
 
     # __str__
     # ---------------------------------------------------------------
