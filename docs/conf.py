@@ -19,9 +19,12 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../proxy_randomizer'))
+sys.path.insert(0, os.path.abspath('..'))
 
-import proxy_randomizer
+import proxy_randomizer # pylint: disable=import-error
+
+print(sys.path)
+print(proxy_randomizer.__version__)
 
 # -- General configuration ---------------------------------------------
 
