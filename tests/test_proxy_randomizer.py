@@ -42,8 +42,8 @@ class TestProxy:
             anonymity   = utils.UNKNOWN
         )
 
-        assert p.__str__() == "127.0.0.1:8000 Argentina UNKNOWN 0"
-        assert p.get_proxy()    == "127.0.0.1:8000"
+        assert p.__str__() == "127.0.0.1:8000 Argentina UNKNOWN 4"
+        assert p.get_proxy() == "127.0.0.1:8000"
 
 
 
@@ -93,3 +93,4 @@ class TestUtils:
 
         with pytest.raises(utils.NotFoundError):
             utils.get_table_content("", attrs=dict())
+
