@@ -52,7 +52,7 @@ def get_anonymity_level(anonymity: t.Optional[str] = None) -> Anonymity:
 
     # if not anonymity is given, return unknown
     if not anonymity: return UNKNOWN
-    
+
     # predicate to find anonnymity instance
     predicate = lambda anonymity_level: anonymity.lower() in anonymity_level.name.lower()
 

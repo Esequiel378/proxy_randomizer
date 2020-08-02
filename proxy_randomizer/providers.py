@@ -120,7 +120,7 @@ class RegisteredProviders:
 
     register_provider(provider: Provider, run_parsed: bool) -> None
         register a new provider
-    
+
     get_registered_providers() -> None
         return a list of stored providers
 
@@ -139,7 +139,7 @@ class RegisteredProviders:
         :param  disable_defaults: disable default providers, defaults to False
         :type   disable_defaults: bool, optional
         """
-        
+
         self.proxies: List[Proxy] = list()
 
         self.__registered_providers: List[Provider] = []
@@ -171,7 +171,7 @@ class RegisteredProviders:
 
         # register provider
         self.__registered_providers.append(provider)
-    
+
     # get_provider
     # ---------------------------------------------------------------
     def get_registered_providers(self) -> List[Provider]:

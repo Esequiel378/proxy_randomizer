@@ -22,12 +22,6 @@ proxy randomizer
 * Free software: MIT license
 * Documentation: https://proxy-randomizer.readthedocs.io.
 
-
-Features
---------
-
-* TODO
-
 Credits
 -------
 
