@@ -36,7 +36,6 @@ To use proxy_randomizer in your code, you just need to generate a
 RegisteredProviders instance and parse the providers.
 
 .. code-block:: python
-    :linenos:
 
     from proxy_randomizer.providers import RegisteredProviders
 
@@ -49,15 +48,14 @@ RegisteredProviders instance and parse the providers.
 You can iterate throughout all proxies as simple as this.
 
 .. code-block:: python
-    :linenos:
 
-    from proxy_randomizer.providers import RegisteredProviders
-    import requests
+   from proxy_randomizer.providers import RegisteredProviders
+   import requests
 
-    rp = RegisteredProviders()
-    rp.parse_providers()
+   rp = RegisteredProviders()
+   rp.parse_providers()
 
-    for proxy in rp.proxies:
+   for proxy in rp.proxies:
 
         proxies     = { "https": f"{proxy.ip_address}:{proxy.port}" }
         response    = requests.get("http://google.com", proxies=proxies)
@@ -68,26 +66,24 @@ If you need to hide your identity, you can filter the proxy list by its
 anonymity level.
 
 .. code-block:: python
-    :linenos:
 
-    from proxy_randomizer.providers import RegisteredProviders
-    from proxy_randomizer.utils import ANONYMOUS
+   from proxy_randomizer.providers import RegisteredProviders
+   from proxy_randomizer.utils import ANONYMOUS
 
-    rp = RegisteredProviders()
-    rp.parse_providers()
+   rp = RegisteredProviders()
+   rp.parse_providers()
 
-    anonymous_proxies = list( filter(lambda proxy: proxy.anonymity == ANONYMOUS, rp.proxies) )
+   anonymous_proxies = list( filter(lambda proxy: proxy.anonymity == ANONYMOUS, rp.proxies) )
 
-    print(f"filtered proxies: {anonymous_proxies}")
+   print(f"filtered proxies: {anonymous_proxies}")
 
 There are four different anonymity levels, you can inspect them like this
 
 .. code-block:: python
-    :linenos:
 
-    from proxy_randomizer.utils import ANONYMITY_LEVELS
+   from proxy_randomizer.utils import ANONYMITY_LEVELS
 
-    print(ANONYMITY_LEVELS)
+   print(ANONYMITY_LEVELS)
 
 
 
