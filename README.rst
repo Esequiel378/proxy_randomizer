@@ -23,14 +23,14 @@ proxy randomizer
 * Documentation: https://proxy-randomizer.readthedocs.io.
 
 Installation
--------
+------------
 
 .. code-block:: python
 
    pip install proxy_randomizer
 
 API
--------
+---
 
 To use proxy_randomizer in your code, you just need to generate a
 RegisteredProviders instance and parse the providers.
@@ -88,11 +88,11 @@ There are four different anonymity levels, you can inspect them like this
 
 
 Command-line interface
--------
+----------------------
 
 If you need some quick proxy, just type this in your terminal.
 
-.. code-block:: terminal
+.. code-block:: bash
 
    proxy_randomizer
 
