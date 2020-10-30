@@ -3,29 +3,22 @@
 """Tests for `providers` module."""
 
 # built in modules
-# ---------------------------------------------------------------
 
 # local modules
-# ---------------------------------------------------------------
 from proxy_randomizer.providers import Provider, RegisteredProviders
 from proxy_randomizer.proxy import Proxy
 
 # third party modules
-# ---------------------------------------------------------------
 
 # type hint
-# ---------------------------------------------------------------
+
 
 class TestProvider:
-
-    # test_provider_constructor
-    # ---------------------------------------------------------------
     def test_provider_constructor(self):
-        """check provider constructor and attributes types
-        """
+        """check provider constructor and attributes types"""
 
-        url     = "https://test-provider.net/"
-        attrs   = { "id" : "proxylisttable" }
+        url = "https://test-provider.net/"
+        attrs = {"id": "proxylisttable"}
 
         provider_instance = Provider(url=url, attrs=attrs)
 
@@ -33,12 +26,10 @@ class TestProvider:
         assert provider_instance.attrs == attrs
         assert isinstance(provider_instance.proxies, list) == True
 
-    # test_freeproxy_provider
-    # ---------------------------------------------------------------
     def test_freeproxy_provider(self):
 
-        url     = "https://free-proxy-list.net/"
-        attrs   = { "id" : "proxylisttable" }
+        url = "https://free-proxy-list.net/"
+        attrs = {"id": "proxylisttable"}
 
         provider_instance = Provider(url=url, attrs=attrs)
 
@@ -46,12 +37,10 @@ class TestProvider:
 
         assert isinstance(provider_instance.proxies[0], Proxy)
 
-    # test_sslproxy_provider
-    # ---------------------------------------------------------------
     def test_sslproxy_provider(self):
 
-        url     = "https://www.sslproxies.org/"
-        attrs   = { "id" : "proxylisttable" }
+        url = "https://www.sslproxies.org/"
+        attrs = {"id": "proxylisttable"}
 
         provider_instance = Provider(url=url, attrs=attrs)
 
@@ -59,10 +48,8 @@ class TestProvider:
 
         assert isinstance(provider_instance.proxies[0], Proxy)
 
-class TestRegisteredProviders:
 
-    # test_registered_providers_constructor_with_defaults_providers
-    # ---------------------------------------------------------------
+class TestRegisteredProviders:
     def test_registered_providers_constructor_with_defaults_providers(self):
 
         r = RegisteredProviders(disable_defaults=False)
@@ -74,8 +61,6 @@ class TestRegisteredProviders:
 
         assert isinstance(r.proxies, list)
 
-    # test_registered_providers_constructor_without_defaults_providers
-    # ---------------------------------------------------------------
     def test_registered_providers_constructor_without_defaults_providers(self):
 
         r = RegisteredProviders(disable_defaults=True)
@@ -83,8 +68,6 @@ class TestRegisteredProviders:
         assert len(r.get_registered_providers()) == 0
         assert isinstance(r.proxies, list)
 
-    # test_registered_providers_parse_providers
-    # ---------------------------------------------------------------
     def test_registered_providers_parse_providers(self):
 
         r = RegisteredProviders(disable_defaults=False)
@@ -96,12 +79,10 @@ class TestRegisteredProviders:
 
         assert hasattr(r, "proxies")
 
-    # test_registered_get_random_proxy
-    # ---------------------------------------------------------------
     def test_registered_get_random_proxy(self):
 
-        url     = "https://www.sslproxies.org/"
-        attrs   = { "id" : "proxylisttable" }
+        url = "https://www.sslproxies.org/"
+        attrs = {"id": "proxylisttable"}
 
         test_provider = Provider(url=url, attrs=attrs)
 
