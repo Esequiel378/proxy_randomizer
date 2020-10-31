@@ -13,8 +13,13 @@ proxy-randomizer
         :target: https://proxy-randomizer.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://static.pepy.tech/personalized-badge/proxy-randomizer?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads
+        :target: https://pepy.tech/project/proxy-randomizer
+        :alt: Total Downloads
 
-
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+        :target: https://github.com/psf/black
+        :alt: Black Formater
 
 proxy randomizer
 

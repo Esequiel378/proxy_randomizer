@@ -1,58 +1,24 @@
 """Provider module to handle all providers related stuff"""
 
 # built in modules
-# ---------------------------------------------------------------
 import random
 
 # local modules
-# ---------------------------------------------------------------
 from proxy_randomizer.proxy import Proxy, Anonymity
 from proxy_randomizer import utils
 
 # third party modules
-# ---------------------------------------------------------------
 import requests
 from bs4 import BeautifulSoup
 
 # type hint
-# ---------------------------------------------------------------
 from typing import List, Optional, Callable
 from proxy_randomizer.proxy import Proxy
 
 
-
-# Provider
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Provider:
-    """Provider.
+    """Provider."""
 
-    ...
-    Attributes
-    ----------
-
-    url: str
-        proxy provider url
-
-    attrs: dict
-        attributes to find table in html
-
-    proxies: list
-        list of proxies objects, parsed from providers pages
-
-    ...
-    Methods
-    -------
-
-    __init__()
-        Provider constructor
-
-    parse() -> None
-        parse proxies from providers page
-
-    """
-
-    # __init__
-    # ---------------------------------------------------------------
     def __init__(self, url: str, attrs: dict):
         """Provider contructor.
 
@@ -63,12 +29,10 @@ class Provider:
         :type   attrs   : dict
         """
 
-        self.url        : str   = url
-        self.attrs      : dict  = attrs
-        self.proxies    : list  = list()
+        self.url: str = url
+        self.attrs: dict = attrs
+        self.proxies: list = list()
 
-    # parse
-    # ---------------------------------------------------------------
     def parse(self) -> None:
         """parse proxies from providers page.
 
@@ -79,60 +43,27 @@ class Provider:
         response = requests.get(self.url, timeout=5)
 
         # check for error on response
-        if response.status_code != 200: raise Exception(f"reponse error {response.status_code}")
+        if response.status_code != 200:
+            raise Exception(f"reponse error {response.status_code}")
 
         # parse provider proxies table
         parsed_table = utils.get_table_content(response.text, attrs=self.attrs)
 
         # create and store proxies
-        self.proxies = [ Proxy(
+        self.proxies = [
+            Proxy(
+                ip_address=elm.get("ip address"),
+                port=elm.get("port"),
+                country=elm.get("country"),
+                anonymity=utils.get_anonymity_level(elm.get("anonymity")),
+            )
+            for elm in parsed_table
+        ]
 
-            ip_address  = elm.get("ip address"),
-            port        = elm.get("port"),
-            country     = elm.get("country"),
-            anonymity   = utils.get_anonymity_level(elm.get("anonymity")),
 
-        ) for elm in parsed_table ]
-
-
-
-# RegisteredProviders
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class RegisteredProviders:
-    """RegisteredProviders.
+    """RegisteredProviders."""
 
-    ...
-    Attribures
-    ----------
-
-    proxies: List[Proxy]
-        list of proxies from providers
-
-    __registered_providers: list
-        registered providers
-
-    ...
-    Methods
-    -------
-
-    __init__() -> None
-        RegisteredProviders contructor
-
-    register_provider(provider: Provider, run_parsed: bool) -> None
-        register a new provider
-
-    get_registered_providers() -> None
-        return a list of stored providers
-
-    parse_providers() -> None
-        parse all stored providers
-
-    get_random_proxy(self, predicate : Optional[Callable] = None) -> Proxy
-        get a random stored proxy
-    """
-
-    # __init__
-    # ---------------------------------------------------------------
     def __init__(self, disable_defaults: bool = False) -> None:
         """RegisteredProviders contructor.
 
@@ -145,15 +76,19 @@ class RegisteredProviders:
         self.__registered_providers: List[Provider] = []
 
         if not disable_defaults:
-            FreeProxyProvider   = Provider("https://free-proxy-list.net/" , attrs={"id":"proxylisttable"})
-            SslProxyProvider    = Provider("https://www.sslproxies.org/"  , attrs={"id":"proxylisttable"})
+            FreeProxyProvider = Provider(
+                "https://free-proxy-list.net/", attrs={"id": "proxylisttable"}
+            )
+            SslProxyProvider = Provider(
+                "https://www.sslproxies.org/", attrs={"id": "proxylisttable"}
+            )
             # PremProxyProvider   : Provider  = Provider  ("https://premproxy.com/list/"  , attrs={"id":"proxylistt"})
 
             # register defaults providers
-            list( map(self.register_provider, [FreeProxyProvider, SslProxyProvider]) ) # PremProxyProvider
+            list(
+                map(self.register_provider, [FreeProxyProvider, SslProxyProvider])
+            )  # PremProxyProvider
 
-    # register_provider
-    # ---------------------------------------------------------------
     def register_provider(self, provider: Provider, run_parser: bool = False) -> None:
         """register a new provider.
 
@@ -167,13 +102,12 @@ class RegisteredProviders:
         """
 
         # parse provider
-        if run_parser: provider.parse()
+        if run_parser:
+            provider.parse()
 
         # register provider
         self.__registered_providers.append(provider)
 
-    # get_provider
-    # ---------------------------------------------------------------
     def get_registered_providers(self) -> List[Provider]:
         """return a list of stored providers.
 
@@ -183,8 +117,6 @@ class RegisteredProviders:
 
         return self.__registered_providers
 
-    # parse_providers
-    # ---------------------------------------------------------------
     def parse_providers(self) -> None:
         """parse all stored providers."""
 
@@ -197,9 +129,7 @@ class RegisteredProviders:
             # delete provider proxies to save memory
             del provider.proxies
 
-    # get_random_proxy
-    # ---------------------------------------------------------------
-    def get_random_proxy(self, predicate : Optional[Callable] = None) -> Proxy:
+    def get_random_proxy(self, predicate: Optional[Callable] = None) -> Proxy:
         """get a random stored proxy.
 
         :param  predicate   : optional function to run a filter before get a random choice, defaults to None
@@ -213,7 +143,8 @@ class RegisteredProviders:
         proxies = self.proxies
 
         # chec if predicate must be executed and run filter
-        if not predicate is None: proxies = filter(predicate, self.proxies)
+        if not predicate is None:
+            proxies = filter(predicate, self.proxies)
 
         # return random choice
         return random.choice(proxies)

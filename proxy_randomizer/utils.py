@@ -1,69 +1,75 @@
 """utils to consume from modules"""
 
 # built in modules
-# ---------------------------------------------------------------
+import unicodedata
 
 # local modules
-# ---------------------------------------------------------------
 from proxy_randomizer.proxy import Anonymity
 
 # third party modules
-# ---------------------------------------------------------------
 import requests
 from bs4 import BeautifulSoup
 
 # type hint
-# ---------------------------------------------------------------
-import typing as t
+from typing import Optional, List, Dict
 
 
-
-# NotFoundError
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class NotFoundError(Exception):
-   pass
-
-
-
-# Anonymities constants
-UNKNOWN         = Anonymity(level=4, name="UNKNOWN")      # type: t.Final
-TRANSPARENT     = Anonymity(level=3, name="TRANSPARENT")  # type: t.Final
-ANONYMOUS       = Anonymity(level=2, name="ANONYMOUS")    # type: t.Final
-ELITE           = Anonymity(level=1, name="ELITE")        # type: t.Final
-
+    pass
 
 
 # Anonymity constants as list to run within a filter
-ANONYMITY_LEVELS = [UNKNOWN, TRANSPARENT, ANONYMOUS, ELITE]
+ANONYMITY_LEVELS = [
+    Anonymity.UNKNOWN,
+    Anonymity.ELITE,
+    Anonymity.ANONYMOUS,
+    Anonymity.TRANSPARENT,
+]
 
 
+def remove_accents(string: str) -> str:
+    """Remove wired characters from string"""
 
-# get_anonymity_level
-# ---------------------------------------------------------------
-def get_anonymity_level(anonymity: t.Optional[str] = None) -> Anonymity:
-    """return an anonymity instance from a given string.
+    return "".join(
+        c for c in unicodedata.normalize("NFKD", string) if not unicodedata.combining(c)
+    )
+
+
+def contains(container: str, string: str) -> bool:
+    """Check if container string contains a given string."""
+
+    container = remove_accents(container).lower()
+    string = remove_accents(string).lower()
+
+    return string in container
+
+
+def get_anonymity_level(anonymity: Optional[str] = None) -> Anonymity:
+    """return the anonymity level from a given string.
 
     :param  anonymity   : anonymity name, default None
-    :type   anonymity   : t.Optional[str]
+    :type   anonymity   : Optional[str]
 
     :return             : Anonymity instance
     :rtype              : Anonymity
     """
 
     # if not anonymity is given, return unknown
-    if not anonymity: return UNKNOWN
+    if not anonymity:
+        return Anonymity.UNKNOWN
 
     # predicate to find anonnymity instance
-    predicate = lambda anonymity_level: anonymity.lower() in anonymity_level.name.lower()
+    predicate = lambda anonymity_level: contains(anonymity, anonymity_level.label)
 
     # find and return anonymity instance or UNKNOWN if can not find any
-    return next( filter(predicate, ANONYMITY_LEVELS), None ) or UNKNOWN
+    anonymity_level = (
+        next(filter(predicate, ANONYMITY_LEVELS), None) or Anonymity.UNKNOWN
+    )
+
+    return anonymity_level
 
 
-
-# get_table_content
-# ---------------------------------------------------------------
-def get_table_content(html : str, attrs : dict) -> t.List[t.Dict[str, str]]:
+def get_table_content(html: str, attrs: dict) -> List[Dict[str, str]]:
     """Get all elementes from a table and return a key-pair list.
 
     :param  html            : html content where table must be scraped
@@ -85,15 +91,16 @@ def get_table_content(html : str, attrs : dict) -> t.List[t.Dict[str, str]]:
     table = soup.find("table", attrs)
 
     # if table can not be found, raise NotFoundError
-    if table is None: raise NotFoundError(f"table {attrs} does not exist")
+    if table is None:
+        raise NotFoundError(f"table {attrs} does not exist")
 
     # get table headers
-    headers = [ th.text.lower() for th in soup.find("thead").find("tr").find_all("th") ]
+    headers = [th.text.lower() for th in soup.find("thead").find("tr").find_all("th")]
 
     # parse and return table content, row by row
-    return [{
+    table_content = [
+        {header: td.text for header, td in zip(headers, tr.find_all("td"))}
+        for tr in table.find("tbody").find_all("tr")
+    ]
 
-        header : td.text for header, td in zip(headers, tr.find_all("td"))
-
-    } for tr in table.find("tbody").find_all("tr") ]
-
+    return table_content
