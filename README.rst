@@ -29,7 +29,7 @@ proxy randomizer
 * Documentation: https://proxy-randomizer.readthedocs.io.
 
 
-Project Desciption
+Description
 ------------------
 
 Inpired by `http-request-randomizer`_
