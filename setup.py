@@ -11,9 +11,9 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'requests==2.23.0',
-    'beautifulsoup4==4.9.0',
-    'lxml==4.5.0',
+    'requests>=2.23.0',
+    'beautifulsoup4>=4.9.0',
+    'lxml>=4.5.0',
 ]
 
 setup_requirements = ['pytest-runner', ]
@@ -50,6 +50,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/esequiel378/proxy_randomizer',
-    version='1.1.0',
+    version='1.2.1',
     zip_safe=False,
 )

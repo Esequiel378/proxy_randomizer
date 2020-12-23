@@ -2,7 +2,7 @@
 
 __author__ = """Esequiel Albornoz"""
 __email__ = "esequielalbornoz7@gmail.com"
-__version__ = "1.1.0"
+__version__ = "__version__ = '1.2.1'"
 
 from .providers import RegisteredProviders
 from .proxy import Proxy
