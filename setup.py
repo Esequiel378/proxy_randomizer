@@ -54,6 +54,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/esequiel378/proxy_randomizer",
-    version="version='1.3.1'",
+    version="version='1.3.2'",
     zip_safe=False,
 )
