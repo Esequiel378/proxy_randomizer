@@ -3,15 +3,15 @@
 # built in modules
 import unicodedata
 
-# local modules
-from proxy_randomizer.proxy import Anonymity
+# type hint
+from typing import Dict, List, Optional
 
 # third party modules
 import requests
 from bs4 import BeautifulSoup
 
-# type hint
-from typing import Optional, List, Dict
+# local modules
+from proxy_randomizer.proxy import Anonymity
 
 
 class NotFoundError(Exception):
@@ -69,14 +69,11 @@ def get_anonymity_level(anonymity: Optional[str] = None) -> Anonymity:
     return anonymity_level
 
 
-def get_table_content(html: str, attrs: dict) -> List[Dict[str, str]]:
+def get_table_content(html: str) -> List[Dict[str, str]]:
     """Get all elementes from a table and return a key-pair list.
 
     :param  html            : html content where table must be scraped
     :type   html            : str
-
-    :param  attrs           : attributes to find the table
-    :type   attrs           : dict
 
     :raises NotFoundError   : raise error if table can not be found
 
@@ -88,11 +85,16 @@ def get_table_content(html: str, attrs: dict) -> List[Dict[str, str]]:
     soup = BeautifulSoup(html, "lxml")
 
     # find table
-    table = soup.find("table", attrs)
+    tableContainer = soup.find("div", {"class": "fpl-list"})
+
+    if tableContainer is None:
+        raise NotFoundError(f"Can not find table or ir does not exist")
+
+    table = tableContainer.find("table")
 
     # if table can not be found, raise NotFoundError
     if table is None:
-        raise NotFoundError(f"table {attrs} does not exist")
+        raise NotFoundError(f"Can not find table or ir does not exist")
 
     # get table headers
     headers = [th.text.lower() for th in soup.find("thead").find("tr").find_all("th")]

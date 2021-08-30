@@ -3,34 +3,30 @@
 # built in modules
 import random
 
-# local modules
-from proxy_randomizer.proxy import Proxy, Anonymity
-from proxy_randomizer import utils
+# type hint
+from typing import Callable, List, Optional
 
 # third party modules
 import requests
 from bs4 import BeautifulSoup
 
-# type hint
-from typing import List, Optional, Callable
-from proxy_randomizer.proxy import Proxy
+from proxy_randomizer import utils
+
+# local modules
+from proxy_randomizer.proxy import Anonymity, Proxy
 
 
 class Provider:
     """Provider."""
 
-    def __init__(self, url: str, attrs: dict):
+    def __init__(self, url: str):
         """Provider contructor.
 
         :param  url     : proxy provider url
         :type   url     : str
-
-        :param  attrs   : attributes to find table in html
-        :type   attrs   : dict
         """
 
         self.url: str = url
-        self.attrs: dict = attrs
         self.proxies: list = list()
 
     def parse(self) -> None:
@@ -47,7 +43,7 @@ class Provider:
             raise Exception(f"reponse error {response.status_code}")
 
         # parse provider proxies table
-        parsed_table = utils.get_table_content(response.text, attrs=self.attrs)
+        parsed_table = utils.get_table_content(response.text)
 
         # create and store proxies
         self.proxies = [
@@ -76,12 +72,8 @@ class RegisteredProviders:
         self.__registered_providers: List[Provider] = []
 
         if not disable_defaults:
-            FreeProxyProvider = Provider(
-                "https://free-proxy-list.net/", attrs={"id": "proxylisttable"}
-            )
-            SslProxyProvider = Provider(
-                "https://www.sslproxies.org/", attrs={"id": "proxylisttable"}
-            )
+            FreeProxyProvider = Provider("https://free-proxy-list.net/")
+            SslProxyProvider = Provider("https://www.sslproxies.org/")
             # PremProxyProvider   : Provider  = Provider  ("https://premproxy.com/list/"  , attrs={"id":"proxylistt"})
 
             # register defaults providers

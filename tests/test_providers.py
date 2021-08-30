@@ -18,20 +18,16 @@ class TestProvider:
         """check provider constructor and attributes types"""
 
         url = "https://test-provider.net/"
-        attrs = {"id": "proxylisttable"}
 
-        provider_instance = Provider(url=url, attrs=attrs)
+        provider_instance = Provider(url=url)
 
         assert provider_instance.url == url
-        assert provider_instance.attrs == attrs
         assert isinstance(provider_instance.proxies, list) == True
 
     def test_freeproxy_provider(self):
 
         url = "https://free-proxy-list.net/"
-        attrs = {"id": "proxylisttable"}
-
-        provider_instance = Provider(url=url, attrs=attrs)
+        provider_instance = Provider(url=url)
 
         provider_instance.parse()
 
@@ -40,9 +36,7 @@ class TestProvider:
     def test_sslproxy_provider(self):
 
         url = "https://www.sslproxies.org/"
-        attrs = {"id": "proxylisttable"}
-
-        provider_instance = Provider(url=url, attrs=attrs)
+        provider_instance = Provider(url=url)
 
         provider_instance.parse()
 
@@ -82,9 +76,7 @@ class TestRegisteredProviders:
     def test_registered_get_random_proxy(self):
 
         url = "https://www.sslproxies.org/"
-        attrs = {"id": "proxylisttable"}
-
-        test_provider = Provider(url=url, attrs=attrs)
+        test_provider = Provider(url=url)
 
         r = RegisteredProviders(disable_defaults=True)
         r.register_provider(test_provider)

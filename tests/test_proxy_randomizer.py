@@ -6,12 +6,12 @@
 import json
 from pathlib import Path
 
+# third party modules
+import pytest
+
 # local modules
 from proxy_randomizer import proxy, utils
 from proxy_randomizer.proxy import Anonymity
-
-# third party modules
-import pytest
 
 # type hint
 
@@ -56,10 +56,7 @@ class TestUtils:
         output_file = FILES_PATH / "get_table_content/output.json"
 
         with open(input_file.as_posix(), "r") as f:
-
-            parsed_data = utils.get_table_content(
-                f.read(), attrs={"id": "proxylisttable"}
-            )
+            parsed_data = utils.get_table_content(f.read())
 
             with open(output_file.as_posix(), "r") as of:
                 assert parsed_data == json.loads(of.read())
@@ -67,4 +64,4 @@ class TestUtils:
     def test_bad_get_table_content(self):
 
         with pytest.raises(utils.NotFoundError):
-            utils.get_table_content("", attrs=dict())
+            utils.get_table_content("")
