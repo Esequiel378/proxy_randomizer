@@ -2,6 +2,15 @@
 History
 =======
 
+1.3.1 (2021-08-30)
+------------------
+
+* Fix table not found error and some updates
+
+* Upate table selector and tests
+
+* Add python 3.9 compatibility in the config
+
 1.3.0 (2021-01-06)
 ------------------
 
