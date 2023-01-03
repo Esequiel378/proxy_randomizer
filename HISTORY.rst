@@ -2,6 +2,17 @@
 History
 =======
 
+1.3.5 (2023-01-03)
+------------------
+
+* Move CI from Travis to GitHub Actions
+* Fix a bug in the project version bumps script
+
+1.3.4 (2023-01-03)
+------------------
+
+* Fix security issue
+
 1.3.3 (2021-08-30)
 ------------------
 
