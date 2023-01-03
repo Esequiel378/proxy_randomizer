@@ -6,9 +6,6 @@ proxy-randomizer
 .. image:: https://img.shields.io/pypi/v/proxy_randomizer.svg?version=latest
         :target: https://pypi.python.org/pypi/proxy_randomizer
 
-.. image:: https://travis-ci.com/Esequiel378/proxy_randomizer.svg?branch=master
-        :target: https://travis-ci.com/Esequiel378/proxy_randomizer
-
 .. image:: https://readthedocs.org/projects/proxy-randomizer/badge/?version=latest
         :target: https://proxy-randomizer.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
